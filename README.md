@@ -95,8 +95,7 @@ Neste projeto, optamos por uma abordagem que mescla a modularização com a simp
 1. **Clonar o repositório**:
    ```bash
    git clone https://github.com/aniellima/SimuladorEmprestimo.git
-   cd SimuladorEmprestimo
-   ```
+   cd SimuladorHabitacional
 2. **Restaurar as dependências**:
    ```bash
    dotnet restore
@@ -118,7 +117,7 @@ Neste projeto, optamos por uma abordagem que mescla a modularização com a simp
 1. **Clonar projeto:**
    ```bash
    git clone https://github.com/aniellima/SimuladorEmprestimo.git
-   cd SimuladorEmprestimo
+   cd SimuladorHabitacional
    ```
 2. **Construir e executar os containers**:
    ```bash
