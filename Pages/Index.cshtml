@@ -1,0 +1,93 @@
+﻿@page
+@model SimulacaoEmprestimo.Pages.IndexModel
+@{
+    ViewData["Title"] = "Simulação de Empréstimo Imobiliário";
+}
+
+<h2>Simulação de Empréstimo Imobiliário</h2>
+
+<form method="post" onsubmit="return validateForm()">
+    <div class="form-group">
+        <label for="valorEmprestimo">Valor do Empréstimo:</label>
+        <input type="text" class="form-control" id="valorEmprestimo" name="SimulacaoRequest.ValorEmprestimo" placeholder="0,00" oninput="formatCurrency(this)" required>
+    </div>
+    <div class="form-group">
+        <label for="taxaJuros">Taxa de Juros (% ao ano):</label>
+        <input type="text" class="form-control" id="taxaJuros" name="SimulacaoRequest.TaxaJuros" placeholder="0,00" oninput="formatPercentage(this)" required>
+    </div>
+    <div class="form-group">
+        <label for="periodo">Período (meses):</label>
+        <input type="number" class="form-control" id="periodo" name="SimulacaoRequest.Periodo" value="@Model.SimulacaoRequest.Periodo" required>
+    </div>
+    <div class="form-group">
+        <label for="sistemaAmortizacao">Sistema de Amortização:</label>
+        <select class="form-control" id="sistemaAmortizacao" name="SimulacaoRequest.SistemaAmortizacao" required>
+            <option value="SAC" selected>SAC</option>
+            <option value="PRICE">PRICE</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Calcular</button>
+</form>
+
+@section Scripts {
+    <script>
+        function formatCurrency(input) {
+            let value = input.value.replace(/[^\d]/g, '');
+
+            if (isNaN(value) || value === '') {
+                input.value = '0,00';
+                return;
+            }
+
+            value = (parseFloat(value) / 100).toFixed(2);
+
+            input.value = value.replace('.', ',').replace(/\d(?=(\d{3})+,)/g, '$&.');
+        }
+
+        function formatPercentage(input) {
+            let value = input.value.replace(/[^\d]/g, '');
+
+            if (isNaN(value) || value === '') {
+                input.value = '0,00';
+                return;
+            }
+
+            value = (parseFloat(value) / 100).toFixed(2);
+
+            input.value = value.replace('.', ',');
+        }
+
+        function validateForm() {
+            let valorEmprestimo = document.getElementById('valorEmprestimo').value.replace('.', '').replace(',', '.');
+            let taxaJuros = document.getElementById('taxaJuros').value.replace('.', '').replace(',', '.');
+            let periodo = document.getElementById('periodo').value;
+
+            if (parseFloat(valorEmprestimo) <= 0 || parseFloat(periodo) <= 0) {
+                alert('Todos os campos devem ser preenchidos corretamente.');
+                return false;
+            }
+
+            if (parseFloat(taxaJuros) === 0) {
+                return confirm('A taxa de juros é 0,00%. Deseja continuar com essa simulação?');
+            }
+
+            return true;
+        }
+
+        document.getElementById('valorEmprestimo').value = parseFloat(document.getElementById('valorEmprestimo').value || 0).toFixed(2).replace('.', ',');
+        document.getElementById('taxaJuros').value = parseFloat(document.getElementById('taxaJuros').value || 0).toFixed(2).replace('.', ',');
+    </script>
+}
+
+@section Styles {
+    <style>
+        input::placeholder {
+            color: #a9a9a9; /* Cor acinzentada para o placeholder */
+            opacity: 1; /* Para garantir que a cor será aplicada em todos os navegadores */
+        }
+
+        input {
+            color: #000; /* Cor normal do texto do input */
+        }
+    </style>
+}

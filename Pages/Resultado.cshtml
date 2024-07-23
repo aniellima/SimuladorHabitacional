@@ -1,0 +1,57 @@
+@page
+@model SimulacaoEmprestimo.Pages.ResultadoModel
+@{
+    ViewData["Title"] = "Resultado da Simulação";
+}
+
+<h2>Resultado da Simulação</h2>
+
+<div>
+    <p><strong>Valor do Empréstimo:</strong> @Model.ValorEmprestimo.ToString("N0")</p>
+    <p><strong>Taxa de Juros:</strong> @Model.TaxaJuros % ao ano</p>
+    <p><strong>Período:</strong> @Model.Periodo meses</p>
+    <p><strong>Primeira Prestação:</strong> @Model.PrimeiraPrestacao.ToString("N2")</p>
+    <p><strong>Última Prestação:</strong> @Model.UltimaPrestacao.ToString("N2")</p>
+    <p><strong>Valor Total a Pagar:</strong> @Model.ValorTotalPagar.ToString("N2")</p>
+</div>
+
+<button onclick="window.location.href='@Url.Page("/Index")'" class="btn btn-primary mb-3">Nova Simulação</button>
+
+<h3>Detalhes das Parcelas</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Mês</th>
+            <th>Saldo Devedor</th>
+            <th>Amortização</th>
+            <th>Juros</th>
+            <th>Prestação</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.EncargosMensais != null)
+        {
+            @foreach (var parcela in Model.EncargosMensais)
+            {
+                <tr>
+                    <td>@parcela.Mes</td>
+                    <td>@parcela.SaldoDevedor.ToString("N2")</td>
+                    <td>@parcela.ValorAmortizacao.ToString("N2")</td>
+                    <td>@parcela.ValorJuros.ToString("N2")</td>
+                    <td>@parcela.ValorPrestacao.ToString("N2")</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@section Styles {
+    <style>
+        .table {
+            margin-top: 20px;
+        }
+        button {
+            margin-bottom: 20px;
+        }
+    </style>
+}
