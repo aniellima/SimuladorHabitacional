@@ -104,6 +104,7 @@ Neste projeto, optamos por uma abordagem que mescla a modularização com a simp
 3. **Compilar a aplicação**:
    ```bash
    dotnet build
+   dotnet build SimulacaoEmprestimo.csproj
    ```
 4. **Executar a aplicação**:
    ```bash
